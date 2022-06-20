@@ -9,6 +9,8 @@ import {CoinFlip} from "./interfaces/CoinFlip.sol";
 import {Telephone} from "./interfaces/Telephone.sol";
 import {Delegation} from "./interfaces/Delegation.sol";
 import {Force} from "./interfaces/Force.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Building {
   using SafeMath for uint256;
@@ -156,5 +158,19 @@ contract Building {
   }
   fallback() external payable {
   
+  }
+}
+contract BadToken is ERC20 {
+  address private _dex;
+
+  constructor(address dexInstance, string memory name, string memory symbol, uint initialSupply) ERC20(name, symbol) {
+        _mint(msg.sender, initialSupply);
+        _dex = dexInstance;
+  }
+
+  function approve(address owner, address spender, uint256 amount) public returns(bool){
+    require(owner != _dex, "InvalidApprover");
+    super._approve(owner, spender, amount);
+    return true;
   }
 }
